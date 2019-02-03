@@ -35,7 +35,7 @@ public class Request {
 	/**
 	 * 解析请求后，保存请求参数的map
 	 */
-	private Map<String, List<String>> parameterMap;
+	private Map<String, List<String>> parameterMap = new HashMap<String, List<String>>();
 	
 	/**
 	 * 换行符
@@ -47,25 +47,31 @@ public class Request {
 	}
 	
 	public Request(InputStream inputStream) {
-		parameterMap = new HashMap<>();
-		
-		byte[] data = new byte[1024 * 10];
-		
 		try {
+			byte[] data = new byte[1024 * 10];
 			int length = inputStream.read(data);
+			if (length == -1) {
+				return;
+			}
 			this.requestInfo = new String(data, 0, length);
+			System.out.println("requestInfo\n" + requestInfo);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return;
 		}
 		
 		parseRequestInfo();
+		
+		convertQueryStringToMap();
+		
+		System.out.println("完成请求信息的解析");
 	}
 	
 	/**
 	 * 解析请求信息
 	 */
 	public void parseRequestInfo() {
+		System.out.println("开始解析请求");
 		int firstBlank = this.requestInfo.indexOf(" ");
 		int httpStart = this.requestInfo.indexOf(" HTTP/");
 		
@@ -73,6 +79,7 @@ public class Request {
 		
 		this.url = this.requestInfo.substring(firstBlank + 1, httpStart);
 		
+		System.out.println("method " + method);
 		int queryIndex = this.url.indexOf("?");
 		
 		// url中有请求参数
@@ -82,38 +89,39 @@ public class Request {
 			this.queryString = urlArray[1];
 		}
 		
+		System.out.println("url " + url);
 		// 如果是post请求，还要处理主体中的数据
 		if (this.method.equals("post")) {
 			String tmp = this.requestInfo.substring(this.requestInfo.lastIndexOf(this.CRLF)).trim();
-			
-			if (null == this.queryString) {
+			System.out.println("tmp " + tmp);
+			if (tmp != "" && tmp != null && null == queryString) {
 				queryString = tmp;
 			} else {
 				queryString += "&" + tmp;
 			}
 		}
-		
-		
-		
+		System.out.println("" + queryString);
 	}
 	
 	/**
 	 * 将原生的请求字符串解析为Map形式
 	 */
 	public void convertQueryStringToMap() {
-		String[] items = this.queryString.split("&");
-		String key = null;
-		String value = null;
-		for (String str : items) {
-			String[] item = Arrays.copyOf(str.split("="), 2);
-			key = item[0];
-			value = (item[1] == null) ? null : decode(item[1], "utf8");
-			
-			if (parameterMap.containsKey(key)) {
-				parameterMap.put(key, new ArrayList<>());
+		if (queryString != null) {
+			String[] items = queryString.split("&");
+			System.out.println(parameterMap.size());
+			for (String str : items) {
+				String[] item = Arrays.copyOf(str.split("="), 2);
+				String key = item[0];
+				String value = (item[1] == null) ? null : decode(item[1], "utf8");
+				System.out.println(key + " => " + value);
+				if (! parameterMap.containsKey(key)) {
+					parameterMap.put(key, new ArrayList<String>());
+				}
+				
+				System.out.println(parameterMap.get(key));
+				parameterMap.get(key).add(value);
 			}
-			
-			parameterMap.get(key).add(value);
 		}
 	}
 	
@@ -158,16 +166,34 @@ public class Request {
 		}
 		return values.get(0);
 	}
-	
+
+	public String getRequestInfo() {
+		return requestInfo;
+	}
+
 	public String getMethod() {
-		return this.method;
+		return method;
 	}
-	
+
 	public String getUrl() {
-		return this.url;
+		return url;
 	}
-	
+
 	public String getQueryString() {
-		return this.queryString;
+		return queryString;
+	}
+
+	public Map<String, List<String>> getParameterMap() {
+		return parameterMap;
+	}
+
+	public String getCRLF() {
+		return CRLF;
+	}
+
+	@Override
+	public String toString() {
+		return "Request [requestInfo=" + requestInfo + ", method=" + method + ", url=" + url + ", queryString="
+				+ queryString + ", parameterMap=" + parameterMap + "]";
 	}
 }

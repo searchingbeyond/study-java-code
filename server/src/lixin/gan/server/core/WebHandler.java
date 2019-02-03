@@ -55,13 +55,15 @@ public class WebHandler extends DefaultHandler {
 				servletMappingEntity = new ServletMappingEntity();
 				isMapping = true;
 			}
+			System.out.println("开始解析 <" + tagName + ">");
 		}
 	}
 	
 	@Override
 	public void characters(char[] ch, int start, int length) throws SAXException {
-		String content = new String(ch, start, length).trim();
 		if (null != tagName) {
+			String content = new String(ch, start, length).trim();
+			System.out.println("内容为 " + content + "");
 			if (isMapping) {  // 当前正在解析servlet-mapping
 				if (tagName.equals("servlet-name")) {
 					servletMappingEntity.setServletName(content);

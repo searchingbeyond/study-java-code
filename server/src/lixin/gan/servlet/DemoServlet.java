@@ -4,10 +4,9 @@ import lixin.gan.server.core.Request;
 import lixin.gan.server.core.Response;
 import lixin.gan.server.core.Servlet;
 
-public class LoginServlet implements Servlet {
+public class DemoServlet implements Servlet {
 	@Override
 	public void service(Request request, Response response) {
-		response.appendLine(request.getParameterValue("username"));
-		response.appendLine("<h1>Hello World</h1>");
+		response.append("hello world");
 	}
 }

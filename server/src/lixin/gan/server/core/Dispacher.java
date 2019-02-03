@@ -20,6 +20,7 @@ public class Dispacher implements Runnable{
 		
 		try {
 			request = new Request(connection);
+			System.out.println("request ---------\n" + request);
 			response =  new Response(connection);
 		} catch (IOException e) {
 			e.printStackTrace();

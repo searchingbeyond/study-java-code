@@ -51,9 +51,12 @@ public class WebContext {
 		 */
 		for (ServletMappingEntity tmp : servletMappingEntities) {
 			for (String url_tmp : tmp.getUrlPattern()) {
-				servletMap.put(url_tmp, tmp.getServletName());
+				servletMappingMap.put(url_tmp, tmp.getServletName());
 			}
 		} 
+		
+		System.out.println("servletMap---" + servletMappingMap);
+		System.out.println("servletMappingMap---- " + servletMappingMap);
 	}
 	
 	/**

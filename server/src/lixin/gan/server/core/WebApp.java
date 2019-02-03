@@ -26,7 +26,6 @@ public class WebApp {
 	
 	public static Servlet getServletFromUrl(String urlPattern) {
 		String className = webContext.getServletClass(urlPattern);
-		
 		Class clas = null;
 		
 		try {
@@ -34,7 +33,7 @@ public class WebApp {
 			Servlet servlet = (Servlet)clas.getConstructor().newInstance();
 			return servlet;
 		} catch (Exception e) {
-			
+			e.printStackTrace();
 		}
 		
 		return null;
