@@ -8,7 +8,7 @@ import java.net.UnknownHostException;
 import com.sun.xml.internal.ws.spi.db.DatabindingException;
 
 /*
- * 创建客户端额流程
+ * 创建客户端的流程
  * 1、使用Socket创建和服务器的连接， 指定服务器端的ip和port
  * 2、操作输入输出流
  * 3、关闭连接

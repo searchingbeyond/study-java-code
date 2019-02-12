@@ -11,7 +11,6 @@ public class Use_ByteArrayInputStream_ByteArrayOutputStream {
 	 * ByteArrayInputStream和ByteArrayOutputStream来说，操作的数据时在内存中的，所以不用释放，交由gc自动释放
 	 * 
 	 */
-	
 	public static void useByteArrayInputStream() {
 		String msg = "hello world";
 		byte[] data = msg.getBytes();

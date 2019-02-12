@@ -14,7 +14,6 @@ import java.net.SocketException;
  * 3、发送数据 send(DatagramPacket p)
  * 4、释放资源
  */
-
 public class Client {
 	public static void main(String[] args) throws SocketException {
 		

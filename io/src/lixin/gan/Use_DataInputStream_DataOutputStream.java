@@ -12,8 +12,6 @@ public class Use_DataInputStream_DataOutputStream {
 	 * 需要先写出，后读入，读入的顺序和写出的顺序保持一致
 	 * @throws IOException 
 	 */
-	
-	
 	public static void main(String[] args) throws IOException {
 		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 		DataOutputStream dataOutputStream = new DataOutputStream(byteArrayOutputStream);

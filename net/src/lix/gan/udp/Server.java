@@ -29,6 +29,7 @@ public class Server {
 		byte[] container = new byte[1024 * 5];
 		DatagramPacket datagramPacket = new DatagramPacket(container, 0, container.length);
 		
+		// 阻塞式接收数据
 		server.receive(datagramPacket);
 		
 		byte[] data = datagramPacket.getData();

@@ -52,42 +52,51 @@ public class Use_ObjectInputStream_ObjectOutputStream {
 	}
 }
 
-
+// 如果对象要序列化，必须实现Serializable接口
 class Student implements Serializable{
+	
 	private int id;
 	private transient double wage; // 加transient之后，在序列化的时候，该属性会被忽略
 	private String name;
 	private String gender;
-	public int getId() {
-		return id;
+	
+	public Student() {
+		super();
 	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getGender() {
-		return gender;
-	}
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
+	
 	public Student(int id, String name, String gender) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.gender = gender;
 	}
-	public Student() {
-		super();
+
+	public int getId() {
+		return id;
 	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public String getGender() {
+		return gender;
+	}
+	
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	
 	@Override
 	public String toString() {
 		return "Student [id=" + id + ", name=" + name + ", gender=" + gender + "]";
 	}
-	
 }
